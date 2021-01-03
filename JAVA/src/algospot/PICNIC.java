@@ -1,7 +1,9 @@
+package algospot;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+public class PICNIC {
 	static int N, M, half, ans;
 	static int[] data, visit;
 	static int[][] map;
