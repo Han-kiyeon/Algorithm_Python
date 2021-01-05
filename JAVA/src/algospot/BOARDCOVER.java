@@ -1,6 +1,8 @@
+package algospot;
+
 import java.util.Scanner;
 
-public class Main {
+public class BOARDCOVER {
 	static int H, W, ans;
 	static int[][] map;
 
