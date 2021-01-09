@@ -1,85 +1,48 @@
 import java.util.Scanner;
 
 public class Main {
-	static int H, W, ans;
-	static int[][] map;
-
-	static int[][][] block = { { { 0, 0 }, { 0, 1 }, { 1, 1 } }, { { 0, 0 }, { 0, 1 }, { 1, 0 } },
-			{ { 0, 0 }, { 1, 0 }, { 1, 1 } }, { { 0, 0 }, { 1, 0 }, { 1, -1 } }, };
+	static int INF = Integer.MAX_VALUE >> 1, SWITCH = 10, CLOCK = 16;
+	static int[][] switches = { { 0, 1, 2 }, { 3, 7, 9, 11 }, { 4, 10, 14, 15 }, { 0, 4, 5, 6, 7 }, { 6, 7, 8, 10, 12 },
+			{ 0, 2, 14, 15 }, { 3, 14, 15 }, { 4, 5, 7, 14, 15 }, { 1, 2, 3, 4, 5 }, { 3, 4, 5, 9, 13 } };
+	static int[] clocks;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int C = sc.nextInt();
 		for (int tc = 0; tc < C; tc++) {
-			H = sc.nextInt();
-			W = sc.nextInt();
+			clocks = new int[CLOCK];
+			for (int clock = 0; clock < CLOCK; clock++)
+				clocks[clock] = (sc.nextInt() / 3) % 4;
 
-			map = new int[H][W];
-			int cnt = 0;
-			for (int i = 0; i < H; i++) {
-				String input = sc.next();
-				for (int j = 0; j < W; j++) {
-					map[i][j] = input.charAt(j) == '.' ? 0 : 1;
-					if (map[i][j] == 0)
-						cnt++;
-				}
-			}
-
-			if (cnt % 3 != 0) {
-				System.out.println(0);
-			} else {
-				ans = 0;
-				solve(cnt);
-				System.out.println(ans);
-			}
+			int ret = solve(0);
+			System.out.println(ret != INF ? ret : -1);
 		}
 	}
 
-	private static void solve(int cnt) {
-		if (cnt == 0) {
-			ans++;
-			return;
-		}
-
-		for (int i = 0; i < H; i++) {
-			for (int j = 0; j < W; j++) {
-				if (map[i][j] == 0) {
-					for (int k = 0; k < 4; k++) {
-						if (check(k, i, j)) {
-							set(k, i, j, 1);
-							solve(cnt - 3);
-							set(k, i, j, 0);
-						}
-					}
-					return;
-				}
-			}
-		}
-
-	}
-
-	private static void set(int k, int r, int c, int v) {
-		for (int i = 0; i < 3; i++) {
-			int nr = r + block[k][i][0];
-			int nc = c + block[k][i][1];
-			map[nr][nc] = v;
-		}
-	}
-
-	private static boolean check(int k, int r, int c) {
-		for (int i = 0; i < 3; i++) {
-			int nr = r + block[k][i][0];
-			int nc = c + block[k][i][1];
-			if (!isRange(nr, nc) || map[nr][nc] == 1) {
+	private static boolean check() {
+		for (int i : clocks)
+			if (i != 0)
 				return false;
-			}
-		}
 		return true;
 	}
 
-	private static boolean isRange(int nr, int nc) {
-		if (0 <= nr && nr < H && 0 <= nc && nc < W)
-			return true;
-		return false;
+	private static void push(int depth) {
+		for (int i : switches[depth]) {
+			clocks[i]++;
+			clocks[i] %= 4;
+		}
+	}
+
+	private static int solve(int depth) {
+		if (depth == SWITCH) {
+			return check() ? 0 : INF;
+		}
+
+		int ret = INF;
+		for (int cnt = 0; cnt < 4; cnt++) {
+			ret = Math.min(ret, cnt + solve(depth + 1));
+			push(depth);
+		}
+		return ret;
 	}
 }
