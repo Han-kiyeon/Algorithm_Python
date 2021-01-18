@@ -1,6 +1,8 @@
+package algospot;
+
 import java.util.Scanner;
 
-public class Main {
+public class FENCE {
 	static int N;
 	static int[] map;
 
