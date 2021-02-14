@@ -1,4 +1,6 @@
-class Solution {
+package programmers.kakao;
+
+class Level1_신규아이디추천 {
 	public static void main(String[] args) {
 		System.out.println(solution("...!@BaT#*..y.abcdefghijklm")); // bat.y.abcdefghi
 		System.out.println(solution("z-+.^.")); // z--
@@ -53,7 +55,7 @@ class Solution {
 		while (answer.length() <= 2) {
 			answer += answer.charAt(answer.length() - 1);
 		}
-		
+
 		return answer;
 	}
 }
