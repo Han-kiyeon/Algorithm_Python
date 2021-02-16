@@ -1,23 +1,56 @@
 import java.util.Arrays;
 
-class Solution {
-	public static void main(String[] args) {
-		String[] ans = solution(5, new int[] { 9, 20, 28, 18, 11 }, new int[] { 30, 1, 2, 1, 17, 28 });
-		System.out.println(Arrays.toString(ans)); // "#####","# # #", "### #", "# ##", "#####"
-		ans = solution(6, new int[] { 46, 33, 33, 22, 31, 50 }, new int[] { 27, 56, 19, 14, 14, 10 });
-		System.out.println(Arrays.toString(ans)); // "######", "### #", "## ##", " #### ", " #####", "### # "
+class Node implements Comparable<Node> {
+	int num;
+	double ratio;
+
+	public Node(int num, double ratio) {
+		this.num = num;
+		this.ratio = ratio;
 	}
 
-	static String[] solution(int n, int[] arr1, int[] arr2) {
-		String[] result = new String[n];
-		for (int i = 0; i < n; i++) {
-			result[i] = Integer.toBinaryString(arr1[i] | arr2[i]);
+	@Override
+	public int compareTo(Node o) {
+		int res = new Double(o.ratio).compareTo(this.ratio);
+		return res == 0 ? this.num - o.num : res;
+	}
+
+}
+
+class Solution {
+	public static void main(String[] args) {
+		int[] ans = solution(5, new int[] { 2, 1, 2, 6, 2, 4, 3, 3 });
+		System.out.println(Arrays.toString(ans)); // 3,4,2,1,5
+		ans = solution(4, new int[] { 4, 4, 4, 4, 4 });
+		System.out.println(Arrays.toString(ans)); // 4,1,2,3
+	}
+
+	static int[] solution(int N, int[] stages) {
+		// 카운트
+		int[] cnt = new int[N + 1];
+		for (int i = 0; i < stages.length; i++) {
+			cnt[stages[i] - 1]++;
 		}
 
-		for (int i = 0; i < n; i++) {
-			result[i] = String.format("%" + n + "s", result[i]);
-			result[i] = result[i].replaceAll("1", "#");
-			result[i] = result[i].replaceAll("0", " ");
+		// 누적합
+		int[] sum = cnt.clone();
+		for (int i = N - 1; i >= 0; i--) {
+			sum[i] += sum[i + 1];
+		}
+
+		// 계산
+		Node[] stage = new Node[N];
+		for (int i = 0; i < stage.length; i++) {
+			stage[i] = new Node(i + 1, sum[i] == 0 ? 0 : cnt[i] / (double) sum[i]);
+		}
+
+		// 정렬
+		Arrays.sort(stage);
+
+		// 결과
+		int[] result = new int[N];
+		for (int i = 0; i < stage.length; i++) {
+			result[i] = stage[i].num;
 		}
 
 		return result;
