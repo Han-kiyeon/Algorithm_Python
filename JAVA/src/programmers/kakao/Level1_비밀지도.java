@@ -1,6 +1,8 @@
+package programmers.kakao;
+
 import java.util.Arrays;
 
-class Solution {
+class Level1_비밀지도 {
 	public static void main(String[] args) {
 		String[] ans = solution(5, new int[] { 9, 20, 28, 18, 11 }, new int[] { 30, 1, 2, 1, 17, 28 });
 		System.out.println(Arrays.toString(ans)); // "#####","# # #", "### #", "# ##", "#####"
