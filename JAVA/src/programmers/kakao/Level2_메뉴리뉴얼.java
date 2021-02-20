@@ -1,10 +1,12 @@
+package programmers.kakao;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-class Solution {
+class Level2_메뉴리뉴얼 {
 	static Map<String, Integer> map;
 	static int max;
 
