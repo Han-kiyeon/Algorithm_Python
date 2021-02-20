@@ -1,4 +1,6 @@
-class Solution {
+package programmers.kakao;
+
+class Level1_다트게임 {
 	public static void main(String[] args) {
 		System.out.println(solution("1S2D*3T"));// 37
 		System.out.println(solution("1D2S#10S"));// 9
