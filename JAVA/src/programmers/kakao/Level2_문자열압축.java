@@ -1,6 +1,8 @@
+package programmers.kakao;
+
 import java.util.ArrayList;
 
-class Solution {
+class Level2_문자열압축 {
 	public static void main(String[] args) {
 		System.out.println(solution("aabbaccc"));// 7
 		System.out.println(solution("ababcdcdababcdcd"));// 9
