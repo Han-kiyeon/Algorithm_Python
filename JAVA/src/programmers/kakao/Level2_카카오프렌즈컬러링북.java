@@ -1,8 +1,10 @@
+package programmers.kakao;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class Solution {
+class Level2_카카오프렌즈컬러링북 {
 	static int[] dr = { 1, -1, 0, 0 };
 	static int[] dc = { 0, 0, -1, 1 };
 
